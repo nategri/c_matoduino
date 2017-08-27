@@ -1,3 +1,12 @@
+CMatoduino is a pure C simulation of the connectome implemented in
+the Nematoduino robotics projects. It is used for monte carlo and
+plotting purposes.
+
+It can be compiled with:
+```
+gcc -I. -o c_matoduino main.c muscles.c neural_rom.c
+```
+
 Nematoduino attempts to emulate the C. Elegans nervous system
 on an Arduino Uno (AtMega328). It is based heavily upon the file
 'connectome.py' from this repository:
@@ -6,11 +15,4 @@ https://github.com/Connectome/GoPiGo
 
 This should still be considered beta software.
 
-Arduino pin assignments can be configured in `pin_config.h`. Note
-that all motor pins are PWM capable, with the same carrier frequency.
-
-The C. Elegans 'chemotaxis' (food sensing) neurons are stimulated by
-default, while the 'nose touch' response neurons are stimulated when
-the robot senses an obstacle at a distance of 50 cm or less.
-
-Nematoduino is covered under the GNU Public License v2.
+CMatoduino is covered under the GNU Public License v2.

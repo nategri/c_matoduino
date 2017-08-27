@@ -1,3 +1,6 @@
+// Compile with:
+// gcc -I. -o c_matoduino main.c muscles.c neural_rom.c
+
 #include <stdint.h>
 #include <string.h>
 #include <stdlib.h>
