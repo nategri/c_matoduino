@@ -260,13 +260,37 @@ void RunNoseTouch() {
 }
 
 void PrintMuscles(FILE *fptr) {
-  // Get the weight on each muscle
+  uint32_t sum = 0;
+
   for(int i = 0; i < N_NMUSCLES; i++) {
+    //uint16_t leftId = LeftBodyMuscles[i];
+    //uint16_t rightId = RightBodyMuscles[i]; 
+
     uint16_t leftId = LeftBodyMuscles[i];
     uint16_t rightId = RightBodyMuscles[i]; 
 
-    uint32_t leftVal = GetNextState(leftId);
-    uint32_t rightVal = GetNextState(rightId);
+    int32_t leftVal = GetNextState(leftId);
+    int32_t rightVal = GetNextState(rightId);
+
+    sum += abs(leftVal) + abs(rightVal);
+
+    // Only here temporarily---should be in muscles function
+    SetNextState(leftId, 0.0);
+    SetNextState(rightId, 0.0);
+  }
+
+  printf("%f\n", (float)sum*255/600.0);
+
+  // Get the weight on each muscle
+  for(int i = 0; i < N_NNECKMUSCLES; i++) {
+    //uint16_t leftId = LeftBodyMuscles[i];
+    //uint16_t rightId = RightBodyMuscles[i]; 
+
+    uint16_t leftId = LeftNeckMuscles[i];
+    uint16_t rightId = RightNeckMuscles[i]; 
+
+    int32_t leftVal = GetNextState(leftId);
+    int32_t rightVal = GetNextState(rightId);
 
     fprintf(fptr, "%d %d\n", leftVal, rightVal);
 
@@ -281,6 +305,15 @@ void FlushMuscles() {
   for(int i = 0; i < N_NMUSCLES; i++) {
     uint16_t leftId = LeftBodyMuscles[i];
     uint16_t rightId = RightBodyMuscles[i]; 
+
+    // Only here temporarily---should be in muscles function
+    SetNextState(leftId, 0.0);
+    SetNextState(rightId, 0.0);
+  }
+
+  for(int i = 0; i < N_NNECKMUSCLES; i++) {
+    uint16_t leftId = LeftNeckMuscles[i];
+    uint16_t rightId = RightNeckMuscles[i]; 
 
     // Only here temporarily---should be in muscles function
     SetNextState(leftId, 0.0);
