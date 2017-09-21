@@ -24,6 +24,9 @@ int32_t RightTotal;
 uint8_t MotorNeuronASum;
 uint8_t MotorNeuronBSum;
 
+uint8_t MotorBState[N_MOTORB];
+uint8_t MotorAState[N_MOTORA];
+
 //
 // Structs
 //
@@ -203,6 +206,10 @@ void ActivateMuscles() {
     uint8_t motorBId = MotorNeuronsB[i];
     if(GetCurrState(motorBId) > N_THRESHOLD) {
       MotorNeuronBSum += 1;
+      MotorBState[i] = 1;
+    }
+    else {
+      MotorBState[i] = 0;
     }
   }
 
@@ -210,6 +217,10 @@ void ActivateMuscles() {
     uint8_t motorAId = MotorNeuronsA[i];
     if(GetCurrState(motorAId) > N_THRESHOLD) {
       MotorNeuronASum += 1;
+      MotorAState[i] = 1;
+    }
+    else {
+      MotorAState[i] = 0;
     }
   }
 }
@@ -279,7 +290,7 @@ void PrintMuscles(FILE *fptr) {
     SetNextState(rightId, 0.0);
   }
 
-  printf("%f\n", (float)sum*255/600.0);
+  //printf("%f\n", (float)sum*255/600.0);
 
   // Get the weight on each muscle
   for(int i = 0; i < N_NNECKMUSCLES; i++) {
@@ -347,6 +358,8 @@ int main() {
   	fprintf(filePtr, "START SIM\n");
   	fprintf(filePtrCirc, "START\n");
 
+  	printf("START\n");
+
 
     // Burn in chemotaxis
     for(int i=0; i<randInt; i++) {
@@ -356,6 +369,19 @@ int main() {
         fprintf(filePtr, "TICK %d\n", i);
         PrintMuscles(filePtr);
       	fprintf(filePtrCirc, "%d %d\n", MotorNeuronBSum, MotorNeuronASum);
+
+        // For motor a/b state
+        printf("TICK\n");
+        for(int k = 0; k < N_MOTORB; k++) {
+          if(MotorBState[k] == 1) {
+            printf("B%d\n", k+1);
+          }
+        }
+        for(int k = 0; k < N_MOTORA; k++) {
+          if(MotorAState[k] == 1) {
+            printf("A%d\n", k+1);
+          }
+        }
       }
       else {
         FlushMuscles();
@@ -370,6 +396,19 @@ int main() {
       //fprintf(filePtr, "%d %d\n", LeftTotal, RightTotal);
       PrintMuscles(filePtr);
       fprintf(filePtrCirc, "%d %d\n", MotorNeuronBSum, MotorNeuronASum);
+
+      // For motor a/b state
+      printf("TICK\n");
+      for(int k = 0; k < N_MOTORB; k++) {
+        if(MotorBState[k] == 1) {
+          printf("B%d\n", k+1);
+        }
+      }
+      for(int k = 0; k < N_MOTORA; k++) {
+        if(MotorAState[k] == 1) {
+          printf("A%d\n", k+1);
+        }
+      }
     }
 
     // Close file
