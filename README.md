@@ -18,7 +18,7 @@ of `nematoduino`, so it needs some care and attention to be generally useful
 to others.
 
 TO DO:
-======
+------
 
 * Clean up python plotting scripts so they're less ad-hoc
 * Same for simulation code (ideally outputs should be separable from core simulation)
