@@ -228,7 +228,7 @@ void ActivateMuscles() {
 // Complete one cycle ('tick') of the nematode neural system
 void NeuralCycle() {
   for(int i = 0; i < N_MAX; i++) {
-    if (abs(GetCurrState(i)) > N_THRESHOLD) {
+    if (GetCurrState(i) > N_THRESHOLD) {
       DischargeNeuron(i);
     }
   }
