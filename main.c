@@ -333,8 +333,6 @@ void FlushMuscles() {
 }
 
 int main() {
-  // initialize state arrays
-  StatesInit();
 
   // Ready a file to write to
   FILE *filePtr;
@@ -347,9 +345,11 @@ int main() {
 
   srand(time(NULL));
   uint16_t randInt;
-
   
   for(int j=0; j<100; j++) {
+    // initialize state arrays
+    StatesInit();
+
     sprintf(fileStr, "./sim_data/sim%d.out", j);
     filePtr = fopen(fileStr, "w");
 
@@ -358,12 +358,20 @@ int main() {
   	fprintf(filePtr, "START SIM\n");
   	fprintf(filePtrCirc, "START\n");
 
-  	printf("START\n");
+  	//printf("START\n");
 
 
     // Burn in chemotaxis
     for(int i=0; i<randInt; i++) {
       RunChemotaxis();
+
+      // Dump for check
+      if((i == 50) && (j == 0)) {
+        for(int m = 0; m < N_NTOTAL; m++) {
+          printf("%d\n", GetCurrState(m));
+        }
+      }
+
       if(randInt - i <= 100) {
         //fprintf(filePtr, "%d %d\n", LeftTotal, RightTotal);
         fprintf(filePtr, "TICK %d\n", i);
@@ -371,7 +379,7 @@ int main() {
       	fprintf(filePtrCirc, "%d %d\n", MotorNeuronBSum, MotorNeuronASum);
 
         // For motor a/b state
-        printf("TICK\n");
+        /*printf("TICK\n");
         for(int k = 0; k < N_MOTORB; k++) {
           if(MotorBState[k] == 1) {
             printf("B%d\n", k+1);
@@ -381,7 +389,7 @@ int main() {
           if(MotorAState[k] == 1) {
             printf("A%d\n", k+1);
           }
-        }
+        }*/
       }
       else {
         FlushMuscles();
@@ -398,7 +406,7 @@ int main() {
       fprintf(filePtrCirc, "%d %d\n", MotorNeuronBSum, MotorNeuronASum);
 
       // For motor a/b state
-      printf("TICK\n");
+      /*printf("TICK\n");
       for(int k = 0; k < N_MOTORB; k++) {
         if(MotorBState[k] == 1) {
           printf("B%d\n", k+1);
@@ -408,7 +416,7 @@ int main() {
         if(MotorAState[k] == 1) {
           printf("A%d\n", k+1);
         }
-      }
+      }*/
     }
 
     // Close file
