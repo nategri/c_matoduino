@@ -92,8 +92,8 @@ int16_t GetCurrState(uint16_t N_ID) {
 
 void SetNextState(uint16_t N_ID, int16_t val) {
   if(N_ID < N_MAX) {
-    if(val > N_THRESHOLD) {
-      NextConnectedState[N_ID] = N_THRESHOLD+1;
+    if(val > 127) {
+      NextConnectedState[N_ID] = 127;
     }
     else if(val < -128) {
       NextConnectedState[N_ID] = -128;
@@ -346,7 +346,8 @@ int main() {
   srand(time(NULL));
   uint16_t randInt;
   
-  for(int j=0; j<100; j++) {
+  //for(int j=0; j<100; j++) {
+  for(int j=0; j<1; j++) {
     // initialize state arrays
     StatesInit();
 
@@ -366,7 +367,7 @@ int main() {
       RunChemotaxis();
 
       // Dump for check
-      if((i == 50) && (j == 0)) {
+      if((i == 75) && (j == 0)) {
         for(int m = 0; m < N_NTOTAL; m++) {
           printf("%d\n", GetCurrState(m));
         }
