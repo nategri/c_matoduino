@@ -61,19 +61,19 @@ with open('motorab_state.out', 'r') as f:
     else:
       currSimRun.add(line, currTick)
 
-p1, = plot.plot(simRunList[0].bTickList, simRunList[0].bVals, 'ob', label='B Motor Neuron')
+"""p1, = plot.plot(simRunList[0].bTickList, simRunList[0].bVals, 'ob', label='B Motor Neuron')
 p2, = plot.plot(simRunList[0].aTickList, simRunList[0].aVals, 'or', label='A Motor Neuron')
 plot.legend([p1, p2], ['B Motor Neuron', 'A Motor Neuron'])
 plot.title("Motor Neuron Activity\n(Chemotaxis first half, nose-touch second half)")
 plot.ylabel("Individual Neurons")
-plot.xlabel("Neural Timesteps")
+plot.xlabel("Neural Timesteps")"""
 
 x, y = simRunList[0].getSpecials()
 
 print("NUM STATES")
 print(len(set(simRunList[0].bTickList)))
 
-"""avg = 1.0
+avg = 1.0
 n = 5.0
 avgList = []
 statesList = simRunList[0].getStates()
@@ -113,7 +113,7 @@ for state in statesList:
   avgList.append(avg)
 
 plot.plot([i for i in range(len(avgList))], avgList, 'b*')
-plot.axvline(x=100.0, color='r')"""
+plot.axvline(x=100.0, color='r')
 #plot.plot(x, y, 'om')
 
 plot.show()
